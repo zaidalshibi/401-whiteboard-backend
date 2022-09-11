@@ -11,9 +11,9 @@ describe('Test Post get routes', () => {
         expect(res.status).toEqual(200);
     });
     it('Get one post', async () => {
-        const res = await request.get('/post/12');
+        const res = await request.get('/post/1');
         expect(res.status).toEqual(200);
-        expect(res.text).toEqual('{"id":12,"title":"this is a test","content":"this is a test","img":"https://www.computersciencedegreehub.com/wp-content/uploads/2016/02/what-is-coding-768x512.jpg","createdAt":"2022-09-11T22:09:38.919Z","updatedAt":"2022-09-11T22:09:38.919Z"}');
+        expect(res.text).toEqual('{"id": 1,"title": "Hello everyone","content": "My name is Zaid Alshibi, 24 years old","img": "https://www.computersciencedegreehub.com/wp-content/uploads/2016/02/what-is-coding-768x512.jpg","createdAt": "2022-09-11T23:14:23.447Z","updatedAt": "2022-09-11T23:14:23.447Z"}');
     });
 });
 
