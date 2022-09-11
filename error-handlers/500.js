@@ -6,3 +6,5 @@ module.exports = ( err, req, res, next ) => {
         message: `Server Error`
     } );
 };
+
+// Author: Zaid Alshibi

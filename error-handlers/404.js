@@ -6,3 +6,5 @@ module.exports = ( err, req, res, next ) => {
         message: `Page Not Found`
     } );
 };
+
+// Author: Zaid Alshibi
