@@ -3,20 +3,6 @@
 const supertest = require( 'supertest' );
 const server = require( '../server' );
 const request = supertest( server.app );
-jest.setTimeout(10000);
-
-describe('Test Post Routes', () => {
-    it('should respond with 404 on an invalid route', async () => {
-        const res = await request.get('/foo');
-        expect(res.status).toEqual(404);
-    });
-    it('Home page works', async () => {
-        const res = await request.get('/');
-        expect(res.status).toEqual(200);
-        expect(res.text).toEqual('{"message":"Home page","code":200}');
-    });
-});
-
 
 describe('Test Post get routes', () => {
     it('Get all posts', async () => {
@@ -32,19 +18,19 @@ describe('Test Post get routes', () => {
 
 describe('Test Post post route', () => {
 it('Create a post', async () => {
-    const res = await request.post('/post').send({
+    const res =  await request.post('/post').send({
         title: 'this is a test',
         content: 'this is a test'
-    });
+    })
     expect(res.status).toEqual(200);
 });
 });
 
 describe('Test Post put route', () => {
     it('Update a post', async () => {
-        const res = await request.put('/post/7').send({
-            title: 'new title',
-            content: 'new content'
+        const res =  await request.put('/post/7').send({
+            title: 'new title new',
+            content: 'new content new'
         });
         expect(res.status).toEqual(201);
         });
