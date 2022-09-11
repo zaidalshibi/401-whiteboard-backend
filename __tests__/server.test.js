@@ -15,3 +15,5 @@ describe( 'Server Running test', () => {
         expect( res.text ).toEqual( '{\"message\":\"Home page\",\"code\":200}' );
     } );
 } );
+
+// Author: Zaid Alshibi
