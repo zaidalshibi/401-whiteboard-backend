@@ -6,11 +6,15 @@ const app = express();
 const notFoundHandler = require( './error-handlers/404' );
 const errorHandler = require( './error-handlers/500' );
 const postRouter = require( './routes/post.route' );
+const commentRouter = require( './routes/comment.route' );
 
 app.use( cors() );
 app.use( express.json() );
 app.use( postRouter );
+app.use( commentRouter );
 
+/* This is a route handler. It is listening for a get request to the root route. When it gets a
+request, it sends back a json object with a message and a code. */
 app.get( '/', ( req, res ) => {
     res.status( 200 ).json( {
         message: 'Home page',
@@ -18,7 +22,7 @@ app.get( '/', ( req, res ) => {
     } );
 } );
 
-app.use(notFoundHandler );
+app.use( notFoundHandler );
 app.use( errorHandler );
 
 function start ( port ) {

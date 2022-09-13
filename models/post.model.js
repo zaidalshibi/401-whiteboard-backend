@@ -7,7 +7,7 @@ const Post = ( sequelize, DataTypes ) => sequelize.define( 'Post', {
     },
     content: {
         type: DataTypes.STRING,
-        defaultValue: true
+        defaultValue: 'My name is Zaid Alshibi, 24 years old'
     },
     img : {
         type: DataTypes.STRING,
