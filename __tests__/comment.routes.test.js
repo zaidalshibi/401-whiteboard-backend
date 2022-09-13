@@ -35,7 +35,7 @@ describe('Test comment post route', () => {
     
     describe('Test comment delete route', () => {
         it('Delete a comment', async () => {
-            const res = await request.delete('/comment/2');
+            const res = await request.delete('/comment/1');
             expect(res.status).toEqual(204);
             expect(res.text).toEqual('');
         });
