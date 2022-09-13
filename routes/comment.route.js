@@ -7,7 +7,7 @@ const { Comment } = require( '../models/index' );
 
 // Routes
 router.get( '/comment', getAllComments );
-router.post( '/comment', addComment );
+router.post( '/comment/:id', addComment );
 router.put( '/comment/:id', updateComment );
 router.delete( '/comment/:id', deleteComment );
 
@@ -31,8 +31,10 @@ async function getAllComments ( req, res ) {
  * @param res - the response object
  */
 async function addComment ( req, res ) {
-    const newComment = req.body;
-    await Comment.create( newComment )
+    const postId = req.params.id;
+    const content = req.body.content;
+    const obj = {'ownerID': postId ,'content': content};
+    await Comment.create( obj )
         .then( async () => {
             await Comment.read()
                 .then( ( comments ) => {

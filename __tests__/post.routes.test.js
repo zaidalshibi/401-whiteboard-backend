@@ -44,17 +44,3 @@ describe( 'Test Post delete route', () => {
         expect( res.text ).toEqual( '' );
     } );
 } );
-
-describe( 'Test all Posts get with comments route', () => {
-    it( 'Get all posts with commnts', async () => {
-        const res = await request.get( '/postWithComment' );
-        expect( res.status ).toEqual( 200 );
-    } );
-} );
-
-describe( 'Test one Post get with comments route', () => {
-    it( 'Get one post with commnts', async () => {
-        const res = await request.get( '/postWithComment/1' );
-        expect( res.status ).toEqual( 200 );
-    } );
-} );

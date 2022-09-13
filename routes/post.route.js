@@ -6,10 +6,8 @@ const router = express.Router();
 const { Post, CommentModel } = require( '../models/index' );
 
 // Routes
-router.get( '/post', getAllPosts );
-router.get( '/postWithComment', getAllPostswithComments );
-router.get( '/postWithComment/:id', getOnePostWithComments );
-router.get( '/post/:id', getOnePost );
+router.get( '/post', getAllPostswithComments );
+router.get( '/post/:id', getOnePostWithComments );
 router.post( '/post', addPost );
 router.put( '/post/:id', updatePost );
 router.delete( '/post/:id', deletePost );
@@ -17,26 +15,26 @@ router.delete( '/post/:id', deletePost );
 
 
 /**
- * It reads all the posts from the database and sends them back to the client
+ * It gets all the posts with comments.
  * @param req - The request object.
- * @param res - The response object.
+ * @param res - the response object
  */
-async function getAllPosts ( req, res ) {
-    let posts = await Post.read();
+async function getAllPostswithComments ( req, res ) {
+    let posts = await Post.readWithComments( CommentModel );
     res.status( 200 ).json( {
         posts
     } );
 }
 
 /**
- * > This function gets a post from the database and sends it to the client
- * @param req - The request object. This is an object that contains information about the HTTP request
- * that raised the event.
+ * It reads one post from the database, and then reads all of the comments associated with that post,
+ * and then returns the post with the comments attached to it
+ * @param req - The request object.
  * @param res - the response object
  */
-async function getOnePost ( req, res ) {
+async function getOnePostWithComments ( req, res ) {
     const id = req.params.id;
-    const post = await Post.read( id );
+    const post = await Post.readOneWithComments( id, CommentModel );
     res.status( 200 ).json( post );
 }
 
@@ -82,29 +80,6 @@ async function deletePost ( req, res ) {
     } );
 }
 
-/**
- * It gets all the posts with comments.
- * @param req - The request object.
- * @param res - the response object
- */
-async function getAllPostswithComments ( req, res ) {
-    let posts = await Post.readWithComments( CommentModel );
-    res.status( 200 ).json( {
-        posts
-    } );
-}
-
-/**
- * It reads one post from the database, and then reads all of the comments associated with that post,
- * and then returns the post with the comments attached to it
- * @param req - The request object.
- * @param res - the response object
- */
-async function getOnePostWithComments ( req, res ) {
-    const id = req.params.id;
-    const post = await Post.readOneWithComments( id, CommentModel );
-    res.status( 200 ).json( post );
-}
 
 
 module.exports = router;
