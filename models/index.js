@@ -7,12 +7,12 @@ const POSTGRES_URL = process.env.DATABASE_URL || "postgresql://zaid:1470@localho
 const collection = require('../collections/user-comment-routes')
 
 const sequelizeOption = {
-    // dialectOptions: {
-    //     ssl: {
-    //         require: true,
-    //         rejectUnauthorized: false
-    //     }
-    // }
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
+    }
 };
 
 let sequelize = new Sequelize( POSTGRES_URL, sequelizeOption );
