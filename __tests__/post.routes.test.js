@@ -11,9 +11,9 @@ describe('Test Post get routes', () => {
         expect(res.status).toEqual(200);
     });
     it('Get one post', async () => {
-        const res = await request.get('/post/1');
+        const res = await request.get('/post/20');
         expect(res.status).toEqual(200);
-        expect(res.text).toEqual('{"id":1,"title":"Hello everyone","content":"My name is Zaid Alshibi, 24 years old","img":"https://www.computersciencedegreehub.com/wp-content/uploads/2016/02/what-is-coding-768x512.jpg","createdAt":"2022-09-11T23:14:23.447Z","updatedAt":"2022-09-11T23:14:23.447Z"}');
+        expect(res.text).toEqual('{\"id\":20,\"title\":\"this is a test\",\"content\":\"this is a test\",\"img\":\"https://www.computersciencedegreehub.com/wp-content/uploads/2016/02/what-is-coding-768x512.jpg\",\"createdAt\":\"2022-09-11T22:39:28.808Z\",\"updatedAt\":\"2022-09-11T22:39:28.808Z\"}');
     });
 });
 
@@ -45,3 +45,17 @@ describe('Test Post delete route', () => {
         expect(res.text).toEqual('');
     });
 });
+
+describe('Test all Posts get with comments route', () => {
+    it('Get all posts with commnts', async () => {
+        const res = await request.get('/postWithComment');
+        expect(res.status).toEqual(200);
+    });
+})
+
+describe('Test one Post get with comments route', () => {
+    it('Get one post with commnts', async () => {
+        const res = await request.get('/postWithComment/1');
+        expect(res.status).toEqual(200);
+    });
+})
