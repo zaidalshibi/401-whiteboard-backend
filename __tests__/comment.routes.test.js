@@ -14,8 +14,7 @@ describe('Test Comment get route', () => {
 
 describe('Test comment post route', () => {
     it('Create a comment', async () => {
-        const res =  await request.post('/comment').send({
-            ownerID: 17,
+        const res =  await request.post('/comment/17').send({
             content: 'this is a test'
         })
         expect(res.status).toEqual(200);
