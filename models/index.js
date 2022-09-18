@@ -3,6 +3,7 @@
 const { Sequelize, DataTypes } = require( 'sequelize' );
 const post = require( './post.model' );
 const comment = require('./comment.model')
+const user = require( './user.model' );
 const POSTGRES_URL = process.env.DATABASE_URL || "postgresql://zaid:1470@localhost:5432/zaid";
 const collection = require('../collections/user-comment-routes')
 
@@ -18,8 +19,9 @@ const sequelizeOption = {
 let sequelize = new Sequelize( POSTGRES_URL, sequelizeOption );
 const postModel = post(sequelize, DataTypes);
 const commentModel = comment(sequelize,DataTypes);
+const userModel = user(sequelize, DataTypes);
 
-postModel.hasMany(commentModel, {foreignKey: 'ownerID', sourceKey: 'id'}) // sourceKey is the Primary key
+postModel.hasMany(commentModel, {foreignKey: 'ownerID', sourceKey: 'id'}) // 1 to many
 commentModel.belongsTo(postModel, {foreignKey: 'ownerID', targetKey: 'id'})
 
 const postCollection = new collection(postModel);
@@ -31,7 +33,9 @@ module.exports = {
     db: sequelize,
     Post: postCollection,
     Comment: commentCollection,
-    CommentModel: commentModel
+    CommentModel: commentModel,
+    PostModel: postModel,
+    UserModel: userModel
 };
 
 // Author: Zaid Alshibi
