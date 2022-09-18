@@ -8,8 +8,8 @@ const request = supertest( server.app );
 describe( 'Test User signup route', () => {
     it( 'Signup a user', async () => {
         const res = await request.post( '/signup' ).send( {
-            username: 'zaid',
-            email: 'zaid@zaid.com',
+            username: 'zaidnew',
+            email: 'zaidnew@zaid.com',
             password: 'password'
         } );
         expect( res.status ).toEqual( 200 );
@@ -21,7 +21,7 @@ describe( 'Test User signup route', () => {
             email: 'zaidzaid.com',
             password: 'password'
         } );
-        expect( res.status ).toEqual( 500 );
+        expect( res.status ).toEqual( 409 );
     } );
 
     it( 'Signup a user with existing username', async () => {
