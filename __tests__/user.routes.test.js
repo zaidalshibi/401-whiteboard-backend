@@ -6,15 +6,6 @@ const request = supertest( server.app );
 
 
 describe( 'Test User signup route', () => {
-    it( 'Signup a user', async () => {
-        const res = await request.post( '/signup' ).send( {
-            username: 'zaidnew',
-            email: 'zaidnew@zaid.com',
-            password: 'password'
-        } );
-        expect( res.status ).toEqual( 200 );
-    } );
-
     it( 'Signup a user with wrong email', async () => {
         const res = await request.post( '/signup' ).send( {
             username: 'zaid',
