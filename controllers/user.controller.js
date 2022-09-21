@@ -13,8 +13,13 @@ const signup = async ( req, res ) => {
             avatar,
         };
         const user = await userModel.create( data );
+        const response = {
+            id: user.id,
+            username: user.username,
+            avatar: user.avatar,
+        };
         if ( user ) {
-            res.status( 200 ).json( user );
+            res.status( 200 ).json( response );
         }
     } catch ( error ) {
         console.log( error );
