@@ -1,6 +1,6 @@
 'use strict';
 
-const Post = ( sequelize, DataTypes ) => sequelize.define( 'Post', {
+module.exports =  ( sequelize, DataTypes ) => sequelize.define( 'Post', {
     title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -12,10 +12,10 @@ const Post = ( sequelize, DataTypes ) => sequelize.define( 'Post', {
     img : {
         type: DataTypes.STRING,
         defaultValue: 'https://www.computersciencedegreehub.com/wp-content/uploads/2016/02/what-is-coding-768x512.jpg'
+    },
+    userID: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 } );
-
-module.exports = Post;
-
-
 // Author: Zaid Alshibi

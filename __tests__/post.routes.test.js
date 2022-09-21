@@ -22,13 +22,13 @@ describe( 'Test Post post route', () => {
             title: 'this is a test',
             content: 'this is a test'
         } );
-        expect( res.status ).toEqual( 200 );
+        expect( res.status ).toEqual( 201 );
     } );
 } );
 
 describe( 'Test Post put route', () => {
     it( 'Update a post', async () => {
-        const res = await request.put( '/post/7' ).send( {
+        const res = await request.put( '/post/2' ).send( {
             title: 'new title new',
             content: 'new content new'
         } );
@@ -39,7 +39,7 @@ describe( 'Test Post put route', () => {
 
 describe( 'Test Post delete route', () => {
     it( 'Delete a post', async () => {
-        const res = await request.delete( '/post/16' );
+        const res = await request.delete( '/post/2' );
         expect( res.status ).toEqual( 204 );
         expect( res.text ).toEqual( '' );
     } );

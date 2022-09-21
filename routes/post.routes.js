@@ -3,7 +3,7 @@
 const express = require( 'express' );
 const router = express.Router();
 
-const { Post, CommentModel } = require( '../models/index' );
+const { postCollection, commentModel, postModel, userModel } = require( '../models/index' );
 
 // Routes
 router.get( '/post', getAllPostswithComments );
@@ -20,7 +20,16 @@ router.delete( '/post/:id', deletePost );
  * @param res - the response object
  */
 async function getAllPostswithComments ( req, res ) {
-    let posts = await Post.readWithComments( CommentModel );
+    const comments = await commentModel.findAll({include: [ userModel ]});
+    let posts = await postModel.findAll( {
+        include: [userModel]
+        } );
+    posts = posts.map( ( post ) => {
+        post.dataValues.comments = comments.filter( ( comment ) => {
+            return comment.postID === post.id;
+        } );
+        return post;
+    } );
     res.status( 200 ).json( {
         posts
     } );
@@ -34,7 +43,19 @@ async function getAllPostswithComments ( req, res ) {
  */
 async function getOnePostWithComments ( req, res ) {
     const id = req.params.id;
-    const post = await Post.readOneWithComments( id, CommentModel );
+    const comments = await commentModel.findAll( {
+        where: {
+            postID: id
+        },
+        include: [ userModel ]
+    } );
+    const post = await postModel.findOne( {
+        where: {
+            id: id
+        },
+        include: [ userModel ]
+    } );
+    post.dataValues.comments = comments;
     res.status( 200 ).json( post );
 }
 
@@ -46,11 +67,11 @@ async function getOnePostWithComments ( req, res ) {
  */
 async function addPost ( req, res ) {
     const newPost = req.body;
-    await Post.create( newPost )
+    await postCollection.create( newPost )
         .then( async () => {
-            await Post.read()
+            await postCollection.read()
                 .then( ( posts ) => {
-                    res.status( 200 ).json( posts );
+                    res.status( 201 ).json( posts );
                 } );
         } );
 }
@@ -64,7 +85,7 @@ async function addPost ( req, res ) {
 async function updatePost ( req, res ) {
     const id = req.params.id;
     const obj = req.body;
-    const post = await Post.update( id, obj );
+    const post = await postCollection.update( id, obj );
     res.status( 201 ).json( post );
 }
 
@@ -75,7 +96,19 @@ async function updatePost ( req, res ) {
  */
 async function deletePost ( req, res ) {
     const id = req.params.id;
-    await Post.delete( id ).then( () => {
+    const comments = await commentModel.findAll( {
+        where: {
+            postID: id
+        }
+    } );
+    comments.forEach( async ( comment ) => {
+        await commentModel.destroy( {
+            where: {
+                id: comment.id
+            }
+        } );
+    } );
+    await postCollection.delete( id ).then( () => {
         res.status( 204 ).send( '' );
     } );
 }

@@ -17,7 +17,7 @@ describe( 'Test User signup route', () => {
 
     it( 'Signup a user with existing username', async () => {
         const res = await request.post( '/signup' ).send( {
-            username: 'zaidalshibi',
+            username: 'zaidzaid',
             email: 'zaidealshibi@gmail.com',
             password: 'password'
         } );
@@ -27,7 +27,7 @@ describe( 'Test User signup route', () => {
     it( 'Signup a user with existing email', async () => {
         const res = await request.post( '/signup' ).send( {
             username: 'zaid',
-            email: 'zaid@zaid.com',
+            email: 'zaidzaid@zaid.com',
             password: 'password'
         } );
         expect( res.status ).toEqual( 409 );
