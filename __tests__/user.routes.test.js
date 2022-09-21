@@ -6,14 +6,14 @@ const request = supertest( server.app );
 
 
 describe( 'Test User signup route', () => {
-    it( 'Signup a user with wrong email', async () => {
-        const res = await request.post( '/signup' ).send( {
-            username: 'zaid',
-            email: 'zaidzaid.com',
-            password: 'password'
-        } );
-        expect( res.status ).toEqual( 409 );
-    } );
+    // it( 'Signup a user with wrong email', async () => {
+    //     const res = await request.post( '/signup' ).send( {
+    //         username: 'zaid',
+    //         email: 'zaidzaid.com',
+    //         password: 'password'
+    //     } );
+    //     expect( res.status ).toEqual( 409 );
+    // } );
 
     it( 'Signup a user with existing username', async () => {
         const res = await request.post( '/signup' ).send( {

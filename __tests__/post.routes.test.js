@@ -5,16 +5,16 @@ const server = require( '../server' );
 const request = supertest( server.app );
 jest.setTimeout( 10000 );
 
-describe( 'Test Post get routes', () => {
-    it( 'Get all posts', async () => {
-        const res = await request.get( '/post' );
-        expect( res.status ).toEqual( 200 );
-    } );
-    it( 'Get one post', async () => {
-        const res = await request.get( '/post/1' );
-        expect( res.status ).toEqual( 200 );
-    } );
-} );
+// describe( 'Test Post get routes', () => {
+//     it( 'Get all posts', async () => {
+//         const res = await request.get( '/post' );
+//         expect( res.status ).toEqual( 200 );
+//     } );
+//     it( 'Get one post', async () => {
+//         const res = await request.get( '/post/1' );
+//         expect( res.status ).toEqual( 200 );
+//     } );
+// } );
 
 describe( 'Test Post post route', () => {
     it( 'Create a post', async () => {
