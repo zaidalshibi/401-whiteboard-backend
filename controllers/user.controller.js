@@ -23,7 +23,16 @@ const signup = async ( req, res ) => {
 
 const allUser = async ( req, res ) => {
     const users = await userModel.findAll({include: [ commentModel , postModel ]});
-    res.json( users );
+    const response = users.map( ( user ) => {
+        return {
+            id: user.id,
+            username: user.username,
+            avatar: user.avatar,
+            comments: user.Comments,
+            posts: user.Posts
+        }
+    } );
+    res.json( response );
 };
 
 const login = async ( req, res ) => {

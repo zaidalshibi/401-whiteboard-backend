@@ -30,9 +30,32 @@ async function getAllPostswithComments ( req, res ) {
         } );
         return post;
     } );
-    res.status( 200 ).json( {
-        posts
+    const response = posts.map( ( post ) => {
+        return {
+            id: post.id,
+            title: post.title,
+            content: post.content,
+            img: post.img,
+            user : {
+                id: post.User.id,
+                username: post.User.username,
+                avatar: post.User.avatar
+            },
+            comments: post.dataValues.comments?.map( ( comment ) => {
+                return {
+                    id: comment.id,
+                    content: comment.content,
+                    postID: comment.postID,
+                    user: {
+                        id: comment.User.id,
+                        username: comment.User.username,
+                        avatar: comment.User.avatar
+                    }
+                };
+            } )
+        };
     } );
+    res.status( 200 ).json( response );
 }
 
 /**

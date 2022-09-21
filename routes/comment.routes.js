@@ -56,7 +56,19 @@ async function getComment ( req, res ) {
         },
         include: [ userModel ]
     } );
-    res.status( 200 ).json( comments );
+    const response = comments.map( ( comment ) => {
+        return {
+            id: comment.id,
+            content: comment.content,
+            postID: comment.postID,
+            user: {
+                id: comment.User.id,
+                username: comment.User.username,
+                avatar: comment.User.avatar
+            }
+        };
+    } );
+    res.status( 200 ).json( response );
 }
 
 /**
