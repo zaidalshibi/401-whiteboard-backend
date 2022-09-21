@@ -3,11 +3,12 @@
 const express = require( 'express' );
 const router = express.Router();
 
-const { commentCollection } = require( '../models/index' );
+const { commentCollection, userModel, commentModel } = require( '../models/index' );
 
 // Routes
 router.get( '/comment', getAllComments );
 router.post( '/comment/:postID/:userID', addComment );
+router.get( '/comment/:postID/:userID', getComment );
 router.put( '/comment/:id', updateComment );
 router.delete( '/comment/:id', deleteComment );
 
@@ -44,6 +45,19 @@ async function addComment ( req, res ) {
         } );
 }
 
+
+async function getComment ( req, res ) {
+    const postID = req.params.postID;
+    const userID = req.params.userID;
+    const comments = await commentModel.findAll( {
+        where: {
+            postID: postID,
+            userID: userID
+        },
+        include: [ userModel ]
+    } );
+    res.status( 200 ).json( comments );
+}
 
 /**
  * It takes the id of the comment to be updated from the request parameters, and the updated comment
