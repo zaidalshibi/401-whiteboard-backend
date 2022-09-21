@@ -13,13 +13,16 @@ const signup = async ( req, res ) => {
             avatar,
         };
         const user = await userModel.create( data );
-        const response = {
-            id: user.id,
-            username: user.username,
-            avatar: user.avatar,
-        };
         if ( user ) {
-            res.status( 200 ).json( response );
+            res.status( 200 ).json( {"user" : {
+                "username": user.username,
+                "id": user.id,
+                "avatar": user.avatar
+            },
+            "token": user.token
+            } );
+        } else {
+            res.status( 500 ).send( 'Internal Server Error' );
         }
     } catch ( error ) {
         console.log( error );
