@@ -5,21 +5,24 @@ const { commentModel, postModel, userModel } = require( '../models/index' );
 
 const signup = async ( req, res ) => {
     try {
-        const { username, email, password, avatar } = req.body;
+        const { username, email, password, avatar, role } = req.body;
         const data = {
             username,
             email,
             password: await bcrypt.hash( password, 10 ),
             avatar,
+            role
         };
         const user = await userModel.create( data );
         if ( user ) {
-            res.status( 200 ).json( {"user" : {
-                "username": user.username,
-                "id": user.id,
-                "avatar": user.avatar
-            },
-            "token": user.token
+            res.status( 200 ).json( {
+                "user": {
+                    "username": user.username,
+                    "id": user.id,
+                    "avatar": user.avatar,
+                    "role": user.role
+                },
+                "token": user.token
             } );
         } else {
             res.status( 500 ).send( 'Internal Server Error' );
@@ -30,15 +33,16 @@ const signup = async ( req, res ) => {
 };
 
 const allUser = async ( req, res ) => {
-    const users = await userModel.findAll({include: [ commentModel , postModel ]});
+    const users = await userModel.findAll( { include: [ commentModel, postModel ] } );
     const response = users.map( ( user ) => {
         return {
             id: user.id,
             username: user.username,
             avatar: user.avatar,
+            role: user.role,
             comments: user.Comments,
             posts: user.Posts
-        }
+        };
     } );
     res.json( response );
 };
@@ -56,11 +60,13 @@ const login = async ( req, res ) => {
     if ( user ) {
         const isSame = await bcrypt.compare( password, user.password );
         if ( isSame ) {
-            return res.status( 200 ).json( {"user" : {
-                "username": user.username,
-                "id": user.id,
-            },
-            "token": user.token
+            return res.status( 200 ).json( {
+                "user": {
+                    "username": user.username,
+                    "id": user.id,
+                    "role": user.role
+                },
+                "token": user.token
             } );
         } else {
             return res.status( 401 ).send( 'You are not authorized' );

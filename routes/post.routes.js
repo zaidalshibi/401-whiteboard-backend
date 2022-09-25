@@ -1,16 +1,18 @@
 'use strict';
 
 const express = require( 'express' );
+const Acl = require( '../middlewares/ACL' );
+const bearerAuth = require( '../middlewares/bearerAuth' );
 const router = express.Router();
 
 const { postCollection, commentModel, postModel, userModel } = require( '../models/index' );
 
 // Routes
-router.get( '/post', getAllPostswithComments );
-router.get( '/post/:id', getOnePostWithComments );
-router.post( '/post', addPost );
-router.put( '/post/:id', updatePost );
-router.delete( '/post/:id', deletePost );
+router.get( '/post', bearerAuth, Acl('read'), getAllPostswithComments );
+router.get( '/post/:id', bearerAuth, Acl('read'), getOnePostWithComments );
+router.post( '/post', bearerAuth, Acl('create'), addPost );
+router.put( '/post/:id', bearerAuth, Acl('update'), updatePost );
+router.delete( '/post/:id', bearerAuth, Acl('delete'), deletePost );
 
 
 
