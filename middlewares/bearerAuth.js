@@ -4,7 +4,7 @@ const { userModel } = require( "../models/index" );
 
 module.exports = async ( req, res, next ) => {
     if ( !req.headers.authorization ) {
-        next( 'Invalid Login' );
+        res.status(401).send( 'Invalid Login' );
     } else {
         const token = req.headers.authorization.split( ' ' ).pop();
         try {
@@ -19,10 +19,10 @@ module.exports = async ( req, res, next ) => {
                 req.token = user.token;
                 next();
             } else {
-                next( 'Invalid Login' );
+                res.status(401).send( 'Invalid Login' );
             }
         } catch ( error ) {
-            next( error );
+            res.status(401).send( error );;
         } 
     }
 }
