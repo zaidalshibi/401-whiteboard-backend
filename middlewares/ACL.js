@@ -1,15 +1,17 @@
 'use strict';
 
-const Acl = (capability) => {
-    return function(req,res,next){
-        if(!req.user.capabilities.includes(capability)){
-            res.status(401).json({
-                message: 'access denied'
-            })
+const Acl = ( capability ) => {
+    return function ( req, res, next ) {
+        if ( !req.user.capabilities.includes( capability ) ) {
+            if ( req.user.id === req.body.userid ) {
+                next();
+            } else {
+                res.status( 403 ).send( 'Access Denied' );
+            }
         } else {
-            next()
+            next();
         }
-    }
-}
+    };
+};
 
-module.exports = Acl
+module.exports = Acl;
