@@ -11,8 +11,8 @@ const { postCollection, commentModel, postModel, userModel } = require( '../mode
 router.get( '/post', bearerAuth, Acl('read'), getAllPostswithComments );
 router.get( '/post/:id', bearerAuth, Acl('read'), getOnePostWithComments );
 router.post( '/post', bearerAuth, Acl('create'), addPost );
-router.put( '/post/:id', bearerAuth, Acl('update'), updatePost );
-router.delete( '/post/:id', bearerAuth, Acl('delete'), deletePost );
+router.put( '/post/:id/:userid', bearerAuth, Acl('update'), updatePost );
+router.delete( '/post/:id/:userid', bearerAuth, Acl('delete'), deletePost );
 
 
 
