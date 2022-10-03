@@ -3,7 +3,7 @@
 const Acl = ( capability ) => {
     return function ( req, res, next ) {
         if ( !req.user.capabilities.includes( capability ) ) {
-            if ( req.user.id === req.body.userid ) {
+            if ( req.user.id === req.params.userid ) {
                 next();
             } else {
                 res.status( 403 ).send( 'Access Denied' );
