@@ -20,7 +20,8 @@ const signup = async ( req, res ) => {
                     "username": user.username,
                     "id": user.id,
                     "avatar": user.avatar,
-                    "role": user.role
+                    "role": user.role,
+                    "capabilities": user.capabilities
                 },
                 "token": user.token
             } );
@@ -64,7 +65,8 @@ const login = async ( req, res ) => {
                 "user": {
                     "username": user.username,
                     "id": user.id,
-                    "role": user.role
+                    "role": user.role,
+                    "capabilities": user.capabilities
                 },
                 "token": user.token
             } );
