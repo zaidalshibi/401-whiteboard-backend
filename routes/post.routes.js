@@ -8,7 +8,7 @@ const router = express.Router();
 const { postCollection, commentModel, postModel, userModel } = require( '../models/index' );
 
 // Routes
-router.get( '/post', Acl('read'), getAllPostswithComments );
+router.get( '/post', bearerAuth, Acl('read'), getAllPostswithComments );
 router.get( '/post/:id', bearerAuth, Acl('read'), getOnePostWithComments );
 router.post( '/post', bearerAuth, Acl('create'), addPost );
 router.put( '/post/:id/:userid', bearerAuth, Acl('update'), updatePost );
